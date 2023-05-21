@@ -1,5 +1,14 @@
+import calcScroll from './calcScroll';
+
 const modals = () => {
-    function bindModal(triggerSelector, modalSelector, closeSelector, timerId, closeClickOverlay = true, isAutoRun = false) {
+    function bindModal(
+        triggerSelector, 
+        modalSelector, 
+        closeSelector, 
+        timerId, 
+        closeClickOverlay = true, 
+        isAutoRun = false
+        ) {
         const trigger = document.querySelectorAll(triggerSelector),
             modal = document.querySelector(modalSelector),
             close = document.querySelector(closeSelector),
@@ -54,8 +63,7 @@ const modals = () => {
     }
 
     function showModalByTime(selector, time, calcFunc) {
-
-    return setTimeout(function() {
+        return setTimeout(function() {
             document.querySelector(selector).style.display = "block";
             document.body.style.overflow = "hidden";
             document.body.style.marginRight = `${calcFunc}px`;
@@ -63,20 +71,7 @@ const modals = () => {
     }
 
 
-    function calcScroll() {
-        let div = document.createElement('div');
-
-        div.style.width = '50px';
-        div.style.height = '50px';
-        div.style.overflowY = 'scroll';
-        div.style.visibility = 'hidden';
-
-        document.body.appendChild(div);
-        let scrollWidth = div.offsetWidth - div.clientWidth;
-        div.remove();
-        
-        return scrollWidth;
-    }
+    
     let timerId = showModalByTime('body > .popup', 60000, calcScroll());
 
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close', timerId);

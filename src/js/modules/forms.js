@@ -1,4 +1,6 @@
 import checkNumInputs from "./checkNumInputs";
+import showStatusMessage from "./showStatusMessage";
+import removeStatusMessage from "./removeStatusMessage";
 
 const forms = (state) => {
     const form = document.querySelectorAll('form'),
@@ -12,8 +14,8 @@ const forms = (state) => {
         failure: 'Что-то пошло не так...'
     };
 
-    const postData = async (url, data) => {
-        document.querySelector('.status').textContent = message.loading;
+    const postData = async (url, data, div) => {
+        showStatusMessage(div, message.loading);
         let res = await fetch(url, {
             method: "POST",
             body: data
@@ -32,10 +34,6 @@ const forms = (state) => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            let statusMessage = document.createElement('div');
-            statusMessage.classList.add('status');
-            item.appendChild(statusMessage);
-
             const formData = new FormData(item);
             if (item.getAttribute('data-calc') === "end") {
                 for (let key in state) {
@@ -43,16 +41,20 @@ const forms = (state) => {
                 }
             }
 
-            postData('assets/server.php', formData)
+            postData('assets/server.php', formData, item)
                 .then(res => {
                     console.log(res);
-                    statusMessage.textContent = message.success;
+                    removeStatusMessage();
+                    showStatusMessage(item, message.success);
                 })
-                .catch(() => statusMessage.textContent = message.failure)
+                .catch(() => {
+                    removeStatusMessage();
+                    showStatusMessage(item, message.failure);
+                })
                 .finally(() => {
                     clearInputs();
                     setTimeout(() => {
-                        statusMessage.remove();
+                        removeStatusMessage();
                         state = {};
                     }, 5000);
                 });

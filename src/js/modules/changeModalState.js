@@ -1,4 +1,5 @@
 import checkNumInputs from "./checkNumInputs";
+import removeStatusMessage from "./removeStatusMessage";
 
 const changeModalState = (state) => {
     const windowForm = document.querySelectorAll('.balcon_icons_img'),
@@ -10,12 +11,20 @@ const changeModalState = (state) => {
     checkNumInputs('#width');
     checkNumInputs('#height');
 
+    windowForm.forEach(item => {
+        item.style.cursor = 'pointer';
+    });
+
     function bindActionToElems(event, elem, prop) {
         elem.forEach((item, i) => {
             item.addEventListener(event, () => {
                 switch(item.nodeName) {
                     case 'SPAN' :
                         state[prop] = i;
+                        if (item.parentNode.classList.contains('border-red')) {
+                            item.parentNode.classList.remove('border-red');
+                            removeStatusMessage();
+                        }
                         break;
                     case 'INPUT' :
                         if (item.getAttribute('type') === 'checkbox') {
@@ -27,7 +36,16 @@ const changeModalState = (state) => {
                                 }
                             });
                         } else {
-                            state[prop] = item.value;
+                            if (item.value !== '') {
+                                state[prop] = item.value;
+                                if (item.classList.contains('border-red')) {
+                                    item.classList.remove('border-red');
+                                    removeStatusMessage();
+                                }
+                            } else {
+                                delete state[prop];
+                            }
+                            
                         }
                         break;
                     case 'SELECT' :

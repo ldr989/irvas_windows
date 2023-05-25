@@ -55,7 +55,7 @@ const forms = (state) => {
                     clearInputs();
                     setTimeout(() => {
                         removeStatusMessage();
-                        state = {};
+                        Object.keys(state).forEach(key => delete state[key]);
                     }, 5000);
                 });
         });

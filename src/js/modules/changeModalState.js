@@ -29,6 +29,7 @@ const changeModalState = (state) => {
                     case 'INPUT' :
                         if (item.getAttribute('type') === 'checkbox') {
                             i === 0 ? state[prop] = 'Cold' : state[prop] = 'Warm';
+                            removeStatusMessage();
                             elem.forEach((box, j) => {
                                 box.checked = false;
                                 if (i == j) {
@@ -50,6 +51,10 @@ const changeModalState = (state) => {
                         break;
                     case 'SELECT' :
                         state[prop] = item.value;
+                        if (item.classList.contains('border-red')) {
+                            item.classList.remove('border-red');
+                            removeStatusMessage();
+                        }
                         break;
                 }
 

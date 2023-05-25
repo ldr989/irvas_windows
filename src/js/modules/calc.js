@@ -5,8 +5,7 @@ import removeStatusMessage from "./removeStatusMessage";
 
 const calc = (state) => {
     const balconForm = document.querySelector('.balcon_icons'),
-        bigImg = document.querySelector('.big_img'),
-        height = document.querySelector('#height');
+        bigImg = document.querySelector('.big_img');
 
 
     const statusMessages = {
@@ -42,13 +41,13 @@ const calc = (state) => {
             tryCatch(removeStatusMessage);
             showStatusMessage(bigImg, statusMessages.height);
         } else {
-            bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', timerId, false);
+            
         }
     });
     
 
 
-    bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', timerId, false);
+    
 };
 
 export default calc;

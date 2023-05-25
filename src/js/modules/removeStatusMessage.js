@@ -1,5 +1,7 @@
 const removeStatusMessage = () => {
-    document.querySelector('.status').remove();
+    if (document.querySelector('.status')) {
+        document.querySelector('.status').remove();
+    }
 };
 
 export default removeStatusMessage;

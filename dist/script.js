@@ -1,6 +1,26 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/autoclick.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/autoclick.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const autoclick = selector => {
+  const elem = document.querySelector(selector);
+  let event = new Event('click');
+  elem.dispatchEvent(event);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (autoclick);
+
+/***/ }),
+
 /***/ "./src/js/modules/bindModal.js":
 /*!*************************************!*\
   !*** ./src/js/modules/bindModal.js ***!
@@ -15,6 +35,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _calcScroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calcScroll */ "./src/js/modules/calcScroll.js");
 /* harmony import */ var _showStatusMessage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./showStatusMessage */ "./src/js/modules/showStatusMessage.js");
 /* harmony import */ var _removeStatusMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./removeStatusMessage */ "./src/js/modules/removeStatusMessage.js");
+/* harmony import */ var _resetCalcForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./resetCalcForm */ "./src/js/modules/resetCalcForm.js");
+
 
 
 
@@ -96,6 +118,10 @@ const bindModal = function (triggerSelector, modalSelector, closeSelector, timer
     modal.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.marginRight = `0px`;
+    if (modal.classList.contains("popup_calc") || isCalc) {
+      (0,_resetCalcForm__WEBPACK_IMPORTED_MODULE_3__["default"])();
+      Object.keys(state).forEach(key => delete state[key]);
+    }
   });
   modal.addEventListener('click', e => {
     if (e.target === modal && closeClickOverlay) {
@@ -105,6 +131,10 @@ const bindModal = function (triggerSelector, modalSelector, closeSelector, timer
       modal.style.display = "none";
       document.body.style.overflow = "";
       document.body.style.marginRight = `0px`;
+      if (modal.classList.contains("popup_calc") || isCalc) {
+        (0,_resetCalcForm__WEBPACK_IMPORTED_MODULE_3__["default"])();
+        Object.keys(state).forEach(key => delete state[key]);
+      }
     }
   });
 };
@@ -212,7 +242,7 @@ const changeModalState = state => {
   bindActionToElems('click', windowForm, 'form');
   bindActionToElems('input', windowHeight, 'height');
   bindActionToElems('input', windowWidth, 'width');
-  bindActionToElems('change', windowType, 'type');
+  bindActionToElems('click', windowType, 'type');
   bindActionToElems('change', windowProfile, 'profile');
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (changeModalState);
@@ -256,6 +286,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _checkNumInputs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkNumInputs */ "./src/js/modules/checkNumInputs.js");
 /* harmony import */ var _showStatusMessage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./showStatusMessage */ "./src/js/modules/showStatusMessage.js");
 /* harmony import */ var _removeStatusMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./removeStatusMessage */ "./src/js/modules/removeStatusMessage.js");
+/* harmony import */ var _autoclick__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./autoclick */ "./src/js/modules/autoclick.js");
+/* harmony import */ var _resetCalcForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./resetCalcForm */ "./src/js/modules/resetCalcForm.js");
+
+
 
 
 
@@ -302,6 +336,8 @@ const forms = state => {
         setTimeout(() => {
           (0,_removeStatusMessage__WEBPACK_IMPORTED_MODULE_2__["default"])();
           Object.keys(state).forEach(key => delete state[key]);
+          (0,_autoclick__WEBPACK_IMPORTED_MODULE_3__["default"])('.popup_close');
+          (0,_resetCalcForm__WEBPACK_IMPORTED_MODULE_4__["default"])();
         }, 5000);
       });
     });
@@ -372,7 +408,7 @@ __webpack_require__.r(__webpack_exports__);
 const modals = state => {
   (0,_bindModal__WEBPACK_IMPORTED_MODULE_0__["default"])('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close', _timerId__WEBPACK_IMPORTED_MODULE_1__["default"], true, true);
   (0,_bindModal__WEBPACK_IMPORTED_MODULE_0__["default"])('.phone_link', '.popup', '.popup .popup_close', _timerId__WEBPACK_IMPORTED_MODULE_1__["default"], true, true);
-  (0,_bindModal__WEBPACK_IMPORTED_MODULE_0__["default"])('.popup_calc_btn', '.popup_calc', '.popup_calc_close', _timerId__WEBPACK_IMPORTED_MODULE_1__["default"], true, true);
+  (0,_bindModal__WEBPACK_IMPORTED_MODULE_0__["default"])('.popup_calc_btn', '.popup_calc', '.popup_calc_close', _timerId__WEBPACK_IMPORTED_MODULE_1__["default"], true, true, false, state);
   (0,_bindModal__WEBPACK_IMPORTED_MODULE_0__["default"])('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', _timerId__WEBPACK_IMPORTED_MODULE_1__["default"], false, false, true, state, 1);
   (0,_bindModal__WEBPACK_IMPORTED_MODULE_0__["default"])('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', _timerId__WEBPACK_IMPORTED_MODULE_1__["default"], false, false, true, state, 2);
 };
@@ -397,6 +433,49 @@ const removeStatusMessage = () => {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (removeStatusMessage);
+
+/***/ }),
+
+/***/ "./src/js/modules/resetCalcForm.js":
+/*!*****************************************!*\
+  !*** ./src/js/modules/resetCalcForm.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _removeStatusMessage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./removeStatusMessage */ "./src/js/modules/removeStatusMessage.js");
+
+const resetCalcForm = () => {
+  const bigImage = document.querySelectorAll('.big_img > img'),
+    windowForm = document.querySelectorAll('.balcon_icons_img'),
+    checkboxes = document.querySelectorAll('.checkbox'),
+    inputs = document.querySelectorAll('.popup_calc_content > input'),
+    select = document.querySelector('.form-control');
+  bigImage.forEach(item => {
+    item.style.display = 'none';
+  });
+  windowForm.forEach(item => {
+    item.classList.remove('do_image_more');
+  });
+  bigImage[0].style.display = 'inline-block';
+  windowForm[0].classList.add('do_image_more');
+  inputs.forEach(item => {
+    item.value = '';
+  });
+  select.value = 'tree';
+  checkboxes.forEach(item => {
+    item.checked = false;
+  });
+  (0,_removeStatusMessage__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  if (document.querySelector('.border-red')) {
+    document.querySelector('.border-red').classList.remove('border-red');
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (resetCalcForm);
 
 /***/ }),
 

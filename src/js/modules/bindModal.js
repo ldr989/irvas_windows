@@ -1,6 +1,7 @@
 import calcScroll from "./calcScroll";
 import showStatusMessage from "./showStatusMessage";
 import removeStatusMessage from "./removeStatusMessage";
+import resetCalcForm from "./resetCalcForm";
 
 const bindModal = (
     triggerSelector,
@@ -94,6 +95,10 @@ const bindModal = (
         modal.style.display = "none";
         document.body.style.overflow = "";
         document.body.style.marginRight = `0px`;
+        if (modal.classList.contains("popup_calc") || isCalc) {
+            resetCalcForm();
+            Object.keys(state).forEach(key => delete state[key]);
+        }
     });
 
     modal.addEventListener('click', (e) => {
@@ -105,6 +110,10 @@ const bindModal = (
             modal.style.display = "none";
             document.body.style.overflow = "";
             document.body.style.marginRight = `0px`;
+            if (modal.classList.contains("popup_calc") || isCalc) {
+                resetCalcForm();
+                Object.keys(state).forEach(key => delete state[key]);
+            }
         }
     });
 };

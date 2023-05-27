@@ -12,7 +12,7 @@ const modals = (state) => {
         true
         );
     bindModal('.phone_link', '.popup', '.popup .popup_close', timerId, true, true);
-    bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close', timerId, true, true);
+    bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close', timerId, true, true, false, state);
     bindModal(
         '.popup_calc_button', 
         '.popup_calc_profile', 

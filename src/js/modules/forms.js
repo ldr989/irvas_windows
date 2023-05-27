@@ -1,6 +1,8 @@
 import checkNumInputs from "./checkNumInputs";
 import showStatusMessage from "./showStatusMessage";
 import removeStatusMessage from "./removeStatusMessage";
+import autoclick from "./autoclick";
+import resetCalcForm from "./resetCalcForm";
 
 const forms = (state) => {
     const form = document.querySelectorAll('form'),
@@ -56,6 +58,8 @@ const forms = (state) => {
                     setTimeout(() => {
                         removeStatusMessage();
                         Object.keys(state).forEach(key => delete state[key]);
+                        autoclick('.popup_close');
+                        resetCalcForm();
                     }, 5000);
                 });
         });

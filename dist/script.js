@@ -454,7 +454,7 @@ const resetCalcForm = () => {
     windowForm = document.querySelectorAll('.balcon_icons_img'),
     checkboxes = document.querySelectorAll('.checkbox'),
     inputs = document.querySelectorAll('.popup_calc_content > input'),
-    select = document.querySelector('.form-control');
+    select = document.querySelector('.popup_calc_profile_content > .form-control');
   bigImage.forEach(item => {
     item.style.display = 'none';
   });
